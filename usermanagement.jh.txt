@@ -1,0 +1,40 @@
+// JDL definition for application 'sygmoidGateway' generated with command 'jhipster export-jdl'
+
+entity Team {
+  name String
+  isEnabled Boolean
+}
+entity Organization {
+  name String
+  isEnabled Boolean
+  email String
+  logo String
+  
+}
+entity TeamUser{
+isEnabled Boolean
+}
+entity TeamRole {
+  teamRole TeamRoleValues required
+}
+
+enum TeamRoleValues {
+  END_USER,
+  POWER_USER,
+  ADMIN,
+  EXECUTIVE
+}
+
+relationship OneToMany {
+  Organization{teams} to Team{organization},
+  Team{teamUsers} to TeamUser{team}
+}
+relationship ManyToOne {
+  TeamUser{users} to User
+}
+relationship ManyToMany {
+  TeamUser{teamRole} to TeamRole{teamUser}
+}
+
+dto Team, Organization, TeamUser, TeamRole with mapstruct
+service Team, Organization, TeamUser, TeamRole with serviceImpl
